@@ -3,10 +3,377 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ghost Pulse</title>
+    <title>Özgür'ü Ne Kadar Tanıyorsun?</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #151d2a;
+            --accent-color: #00e676;
+            --accent-hover: #00b359;
+            --text-color: #e0e6ed;
+            --cs-bomb-bg: #11161f;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #1a2332 0%, #0b0e14 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 15px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            border: 1px solid #2a364f;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            width: 100%;
+            max-width: 480px;
+            padding: 25px;
+            text-align: center;
+            margin: auto;
+        }
+
+        h1 {
+            color: var(--accent-color);
+            font-size: 22px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .question-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* 1. SORU: RENKLER */
+        .color-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .color-card {
+            background: #1c2738;
+            border: 2px solid #2a364f;
+            border-radius: 12px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .color-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .color-box {
+            width: 100%;
+            height: 50px;
+            border-radius: 8px;
+        }
+
+        /* 2. SORU: METİN ŞIKLARI */
+        .btn-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: #1c2738;
+            color: var(--text-color);
+            border: 2px solid #2a364f;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 1px;
+        }
+
+        .option-btn:hover {
+            background: var(--accent-color);
+            color: #000;
+            border-color: var(--accent-color);
+        }
+
+        /* 3. SORU: CS BOMBA EKRANI VE TUŞ TAKIMI */
+        .cs-bomb-container {
+            background: var(--cs-bomb-bg);
+            border: 3px solid #3a4b6e;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+        }
+
+        .bomb-screen {
+            background: #050a0e;
+            border: 2px solid #ff3333;
+            color: #ff3333;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 32px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            letter-spacing: 5px;
+            text-shadow: 0 0 8px rgba(255, 51, 51, 0.7);
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .key-btn {
+            background: #25334a;
+            color: #fff;
+            border: 1px solid #3a4b6e;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #151d2a;
+        }
+
+        .key-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #151d2a;
+        }
+
+        .key-btn.clear {
+            background: #d32f2f;
+        }
+
+        .key-btn.submit {
+            background: #388e3c;
+        }
+
+        /* SONUÇ EKRANI */
+        .result-box {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .answers-summary {
+            background: #1c2738;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: left;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .answers-summary h3 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .answers-summary ul {
+            list-style: none;
+        }
+
+        .answers-summary li {
+            margin-bottom: 8px;
+            border-bottom: 1px solid #2a364f;
+            padding-bottom: 5px;
+        }
+
+        .restart-btn {
+            background: var(--accent-color);
+            color: #000;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #7a8b9e;
+            font-weight: 500;
+        }
+
+        footer b {
+            color: var(--accent-color);
+        }
+    </style>
 </head>
 <body>
-    <h1>🎮 Ghost Pulse</h1>
-    <p>Web sitemiz çalışıyor!</p>
+
+<div class="container">
+    <h1><i class="fa-solid fa-gamepad"></i> Beni Ne Kadar Tanıyorsun?</h1>
+
+    <!-- 1. SORU -->
+    <div id="q1" class="quiz-step">
+        <div class="question-title">1) En sevdiğim renk hangisidir?</div>
+        <div class="color-grid">
+            <div class="color-card" onclick="checkAnswer(1, 'Kırmızı')">
+                <div class="color-box" style="background-color: #ff3333;"></div>
+                <span>Kırmızı</span>
+            </div>
+            <div class="color-card" onclick="checkAnswer(1, 'Mavi')">
+                <div class="color-box" style="background-color: #2196f3;"></div>
+                <span>Mavi</span>
+            </div>
+            <div class="color-card" onclick="checkAnswer(1, 'Yeşil')">
+                <div class="color-box" style="background-color: #4caf50;"></div>
+                <span>Yeşil</span>
+            </div>
+            <div class="color-card" onclick="checkAnswer(1, 'Siyah')">
+                <div class="color-box" style="background-color: #111;"></div>
+                <span>Siyah</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. SORU -->
+    <div id="q2" class="quiz-step" style="display: none;">
+        <div class="question-title">2) Aşağıdakilerden hangisi benimle ilgilidir?</div>
+        <div class="btn-grid">
+            <button class="option-btn" onclick="checkAnswer(2, 'B3K8')">B3K8</button>
+            <button class="option-btn" onclick="checkAnswer(2, 'YCL412')">YCL412</button>
+            <button class="option-btn" onclick="checkAnswer(2, 'ZGRGK')">ZGRGK</button>
+            <button class="option-btn" onclick="checkAnswer(2, 'TYREASF')">TYREASF</button>
+        </div>
+    </div>
+
+    <!-- 3. SORU -->
+    <div id="q3" class="quiz-step" style="display: none;">
+        <div class="question-title">3) Favori sayım nedir?</div>
+        <div class="cs-bomb-container">
+            <div class="bomb-screen" id="bombDisplay">_ _</div>
+            <div class="keypad">
+                <button class="key-btn" onclick="pressKey('1')">1</button>
+                <button class="key-btn" onclick="pressKey('2')">2</button>
+                <button class="key-btn" onclick="pressKey('3')">3</button>
+                <button class="key-btn" onclick="pressKey('4')">4</button>
+                <button class="key-btn" onclick="pressKey('5')">5</button>
+                <button class="key-btn" onclick="pressKey('6')">6</button>
+                <button class="key-btn" onclick="pressKey('7')">7</button>
+                <button class="key-btn" onclick="pressKey('8')">8</button>
+                <button class="key-btn" onclick="pressKey('9')">9</button>
+                <button class="key-btn clear" onclick="clearKey()"><i class="fa-solid fa-xmark"></i></button>
+                <button class="key-btn" onclick="pressKey('0')">0</button>
+                <button class="key-btn submit" onclick="submitBomb()"><i class="fa-solid fa-check"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SONUÇ EKRANI -->
+    <div id="result" class="quiz-step" style="display: none;">
+        <div class="result-box">
+            <h2><i class="fa-solid fa-trophy" style="color: #ffd700;"></i> Test Bitti!</h2>
+            <p id="scoreText" style="font-size: 20px; font-weight: bold;"></p>
+            
+            <div class="answers-summary">
+                <h3>Soruların Cevapları:</h3>
+                <ul>
+                    <li><b>1. Soru (Favori Renk):</b> Mavi</li>
+                    <li><b>2. Soru (Benimle İlgili):</b> ZGRGK</li>
+                    <li><b>3. Soru (Favori Sayı):</b> 24</li>
+                </ul>
+            </div>
+
+            <button class="restart-btn" onclick="restartQuiz()">Tekrar Çöz</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    Yapımcı: <b>Özgür Gök</b>
+</footer>
+
+<script>
+    let correctCount = 0;
+    let wrongCount = 0;
+    let bombInput = "";
+
+    function checkAnswer(questionNum, answer) {
+        if (questionNum === 1) {
+            if (answer === 'Mavi') correctCount++; else wrongCount++;
+            document.getElementById('q1').style.display = 'none';
+            document.getElementById('q2').style.display = 'block';
+        } else if (questionNum === 2) {
+            if (answer === 'ZGRGK') correctCount++; else wrongCount++;
+            document.getElementById('q2').style.display = 'none';
+            document.getElementById('q3').style.display = 'block';
+        }
+    }
+
+    function pressKey(num) {
+        if (bombInput.length < 2) {
+            bombInput += num;
+            updateBombDisplay();
+        }
+    }
+
+    function clearKey() {
+        bombInput = "";
+        updateBombDisplay();
+    }
+
+    function updateBombDisplay() {
+        const display = document.getElementById('bombDisplay');
+        if (bombInput.length === 0) display.innerText = "_ _";
+        else if (bombInput.length === 1) display.innerText = bombInput + " _";
+        else display.innerText = bombInput;
+    }
+
+    function submitBomb() {
+        if (bombInput.length === 0) return;
+        if (bombInput === "24") correctCount++; else wrongCount++;
+        
+        document.getElementById('q3').style.display = 'none';
+        showResult();
+    }
+
+    function showResult() {
+        document.getElementById('result').style.display = 'block';
+        document.getElementById('scoreText').innerText = `Doğru: ${correctCount} | Yanlış: ${wrongCount}`;
+    }
+
+    function restartQuiz() {
+        correctCount = 0;
+        wrongCount = 0;
+        bombInput = "";
+        updateBombDisplay();
+        document.getElementById('result').style.display = 'none';
+        document.getElementById('q1').style.display = 'block';
+    }
+</script>
+
 </body>
 </html>
