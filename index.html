@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Özgür'ü Ne Kadar Tanıyorsun?</title>
+    <title>Özgür'ü Ne Kadar Tanıyorsun? - Efsane Sürüm</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --bg-color: #0b0e14;
             --card-bg: #151d2a;
             --accent-color: #00e676;
             --accent-hover: #00b359;
+            --danger-color: #ff3333;
             --text-color: #e0e6ed;
             --cs-bomb-bg: #11161f;
         }
@@ -31,18 +33,20 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 15px;
+            overflow-x: hidden;
         }
 
         .container {
             background-color: var(--card-bg);
-            border: 1px solid #2a364f;
+            border: 2px solid #2a364f;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 0 25px rgba(0, 230, 118, 0.2);
             width: 100%;
-            max-width: 480px;
+            max-width: 500px;
             padding: 25px;
             text-align: center;
             margin: auto;
+            position: relative;
         }
 
         h1 {
@@ -53,12 +57,26 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            text-shadow: 0 0 10px rgba(0, 230, 118, 0.4);
         }
 
         .question-title {
             font-size: 18px;
             margin-bottom: 20px;
             font-weight: 600;
+        }
+
+        /* SHAKE ANIMATION */
+        .shake {
+            animation: shake 0.4s;
+        }
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            80% { transform: translate(1px, 2px) rotate(-1deg); }
+            100% { transform: translate(1px, -2px) rotate(0deg); }
         }
 
         /* 1. SORU: RENKLER */
@@ -84,6 +102,7 @@
         .color-card:hover {
             border-color: var(--accent-color);
             transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,230,118,0.3);
         }
 
         .color-box {
@@ -92,7 +111,7 @@
             border-radius: 8px;
         }
 
-        /* 2. SORU: METİN ŞIKLARI */
+        /* METİN ŞIKLARI */
         .btn-grid {
             display: flex;
             flex-direction: column;
@@ -116,9 +135,10 @@
             background: var(--accent-color);
             color: #000;
             border-color: var(--accent-color);
+            box-shadow: 0 0 10px rgba(0,230,118,0.5);
         }
 
-        /* 3. SORU: CS BOMBA EKRANI VE TUŞ TAKIMI */
+        /* CS BOMBA EKRANI VE TUŞ TAKIMI */
         .cs-bomb-container {
             background: var(--cs-bomb-bg);
             border: 3px solid #3a4b6e;
@@ -127,10 +147,17 @@
             box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
         }
 
+        .timer-bar {
+            font-size: 14px;
+            color: var(--danger-color);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
         .bomb-screen {
             background: #050a0e;
-            border: 2px solid #ff3333;
-            color: #ff3333;
+            border: 2px solid var(--danger-color);
+            color: var(--danger-color);
             font-family: 'Courier New', Courier, monospace;
             font-size: 32px;
             font-weight: bold;
@@ -168,48 +195,72 @@
             box-shadow: 0 2px 0 #151d2a;
         }
 
-        .key-btn.clear {
-            background: #d32f2f;
-        }
+        .key-btn.clear { background: #d32f2f; }
+        .key-btn.submit { background: #388e3c; }
 
-        .key-btn.submit {
-            background: #388e3c;
-        }
-
-        /* SONUÇ EKRANI */
+        /* SONUÇ & LEADERBOARD */
         .result-box {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
 
-        .answers-summary {
+        .leaderboard-section {
             background: #1c2738;
             border-radius: 10px;
             padding: 15px;
+            margin-top: 15px;
             text-align: left;
-            margin-top: 10px;
+        }
+
+        .leaderboard-section h3 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .leaderboard-list {
+            list-style: none;
+            max-height: 120px;
+            overflow-y: auto;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid #2a364f;
             font-size: 14px;
         }
 
-        .answers-summary h3 {
-            color: var(--accent-color);
-            margin-bottom: 10px;
+        .name-input-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
         }
 
-        .answers-summary ul {
-            list-style: none;
+        .name-input-group input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #3a4b6e;
+            background: #0b0e14;
+            color: #fff;
         }
 
-        .answers-summary li {
-            margin-bottom: 8px;
-            border-bottom: 1px solid #2a364f;
-            padding-bottom: 5px;
+        .save-btn {
+            background: var(--accent-color);
+            color: #000;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
         }
 
         .restart-btn {
-            background: var(--accent-color);
-            color: #000;
+            background: #2196f3;
+            color: #fff;
             border: none;
             padding: 14px;
             border-radius: 10px;
@@ -233,7 +284,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="quizContainer">
     <h1><i class="fa-solid fa-gamepad"></i> Beni Ne Kadar Tanıyorsun?</h1>
 
     <!-- 1. SORU -->
@@ -270,10 +321,33 @@
         </div>
     </div>
 
-    <!-- 3. SORU -->
+    <!-- 3. SORU: BEŞİKTAŞ -->
     <div id="q3" class="quiz-step" style="display: none;">
-        <div class="question-title">3) Favori sayım nedir?</div>
+        <div class="question-title">3) En çok desteklediğim futbol takımı hangisidir?</div>
+        <div class="btn-grid">
+            <button class="option-btn" onclick="checkAnswer(3, 'Galatasaray')">Galatasaray</button>
+            <button class="option-btn" onclick="checkAnswer(3, 'Fenerbahçe')">Fenerbahçe</button>
+            <button class="option-btn" onclick="checkAnswer(3, 'Beşiktaş')">Beşiktaş</button>
+            <button class="option-btn" onclick="checkAnswer(3, 'Trabzonspor')">Trabzonspor</button>
+        </div>
+    </div>
+
+    <!-- 4. SORU: MINECRAFT -->
+    <div id="q4" class="quiz-step" style="display: none;">
+        <div class="question-title">4) En çok zaman geçirmeyi sevdiğim oyun türü/oyun?</div>
+        <div class="btn-grid">
+            <button class="option-btn" onclick="checkAnswer(4, 'Minecraft')">Minecraft</button>
+            <button class="option-btn" onclick="checkAnswer(4, 'PUBG Mobile')">PUBG Mobile</button>
+            <button class="option-btn" onclick="checkAnswer(4, 'FIFA')">FIFA</button>
+            <button class="option-btn" onclick="checkAnswer(4, 'Roblox')">Roblox</button>
+        </div>
+    </div>
+
+    <!-- 5. SORU: CS BOMBA EKRANI -->
+    <div id="q5" class="quiz-step" style="display: none;">
+        <div class="question-title">5) Favori sayım nedir? (Bomba İmha Kodu)</div>
         <div class="cs-bomb-container">
+            <div class="timer-bar" id="timerDisplay">KALAN SÜRE: 15s</div>
             <div class="bomb-screen" id="bombDisplay">_ _</div>
             <div class="keypad">
                 <button class="key-btn" onclick="pressKey('1')">1</button>
@@ -298,13 +372,14 @@
             <h2><i class="fa-solid fa-trophy" style="color: #ffd700;"></i> Test Bitti!</h2>
             <p id="scoreText" style="font-size: 20px; font-weight: bold;"></p>
             
-            <div class="answers-summary">
-                <h3>Soruların Cevapları:</h3>
-                <ul>
-                    <li><b>1. Soru (Favori Renk):</b> Mavi</li>
-                    <li><b>2. Soru (Benimle İlgili):</b> ZGRGK</li>
-                    <li><b>3. Soru (Favori Sayı):</b> 24</li>
-                </ul>
+            <div class="name-input-group" id="saveScoreGroup">
+                <input type="text" id="playerName" placeholder="Adını yaz..." maxlength="15">
+                <button class="save-btn" onclick="saveScore()">Skoru Kaydet</button>
+            </div>
+
+            <div class="leaderboard-section">
+                <h3><i class="fa-solid fa-list-ol"></i> En Yüksek Skorlar</h3>
+                <ul class="leaderboard-list" id="leaderboardList"></ul>
             </div>
 
             <button class="restart-btn" onclick="restartQuiz()">Tekrar Çöz</button>
@@ -320,20 +395,73 @@
     let correctCount = 0;
     let wrongCount = 0;
     let bombInput = "";
+    let timeLeft = 15;
+    let timerInterval = null;
+
+    // WEB AUDIO API - SES EFEKTLERİ
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(freq, type, duration) {
+        try {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.value = freq;
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
+            osc.stop(audioCtx.currentTime + duration);
+        } catch(e){}
+    }
+
+    function playBeep() { playSound(800, 'sine', 0.1); }
+    function playCorrect() { playSound(523.25, 'triangle', 0.2); setTimeout(()=>playSound(659.25, 'triangle', 0.3), 100); }
+    function playWrong() { playSound(150, 'sawtooth', 0.3); triggerShake(); }
+
+    function triggerShake() {
+        const container = document.getElementById('quizContainer');
+        container.classList.add('shake');
+        setTimeout(() => container.classList.remove('shake'), 400);
+    }
 
     function checkAnswer(questionNum, answer) {
         if (questionNum === 1) {
-            if (answer === 'Mavi') correctCount++; else wrongCount++;
+            if (answer === 'Mavi') { correctCount++; playCorrect(); } else { wrongCount++; playWrong(); }
             document.getElementById('q1').style.display = 'none';
             document.getElementById('q2').style.display = 'block';
         } else if (questionNum === 2) {
-            if (answer === 'ZGRGK') correctCount++; else wrongCount++;
+            if (answer === 'ZGRGK') { correctCount++; playCorrect(); } else { wrongCount++; playWrong(); }
             document.getElementById('q2').style.display = 'none';
             document.getElementById('q3').style.display = 'block';
+        } else if (questionNum === 3) {
+            if (answer === 'Beşiktaş') { correctCount++; playCorrect(); } else { wrongCount++; playWrong(); }
+            document.getElementById('q3').style.display = 'none';
+            document.getElementById('q4').style.display = 'block';
+        } else if (questionNum === 4) {
+            if (answer === 'Minecraft') { correctCount++; playCorrect(); } else { wrongCount++; playWrong(); }
+            document.getElementById('q4').style.display = 'none';
+            document.getElementById('q5').style.display = 'block';
+            startBombTimer();
         }
     }
 
+    function startBombTimer() {
+        timeLeft = 15;
+        document.getElementById('timerDisplay').innerText = `KALAN SÜRE: ${timeLeft}s`;
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            document.getElementById('timerDisplay').innerText = `KALAN SÜRE: ${timeLeft}s`;
+            playSound(1000, 'square', 0.05);
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                submitBomb(true);
+            }
+        }, 1000);
+    }
+
     function pressKey(num) {
+        playBeep();
         if (bombInput.length < 2) {
             bombInput += num;
             updateBombDisplay();
@@ -341,6 +469,7 @@
     }
 
     function clearKey() {
+        playBeep();
         bombInput = "";
         updateBombDisplay();
     }
@@ -352,24 +481,69 @@
         else display.innerText = bombInput;
     }
 
-    function submitBomb() {
-        if (bombInput.length === 0) return;
-        if (bombInput === "24") correctCount++; else wrongCount++;
-        
-        document.getElementById('q3').style.display = 'none';
+    function submitBomb(timeOut = false) {
+        clearInterval(timerInterval);
+        if (!timeOut && bombInput === "24") {
+            correctCount++;
+            playCorrect();
+        } else {
+            wrongCount++;
+            playWrong();
+        }
+        document.getElementById('q5').style.display = 'none';
         showResult();
     }
 
     function showResult() {
         document.getElementById('result').style.display = 'block';
         document.getElementById('scoreText').innerText = `Doğru: ${correctCount} | Yanlış: ${wrongCount}`;
+        
+        // Konfeti patlatma
+        if (correctCount >= 3 && typeof confetti === 'function') {
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        }
+        
+        // Bomb has been defused ses efekti simülasyonu
+        playSound(400, 'sine', 0.2);
+        setTimeout(() => playSound(600, 'sine', 0.4), 200);
+
+        renderLeaderboard();
+    }
+
+    function saveScore() {
+        const nameInput = document.getElementById('playerName');
+        const name = nameInput.value.trim() || 'Anonim';
+        
+        let scores = JSON.parse(localStorage.getItem('quiz_scores') || '[]');
+        scores.push({ name: name, score: correctCount });
+        scores.sort((a, b) => b.score - a.score);
+        scores = scores.slice(0, 5); // İlk 5 kişi
+        
+        localStorage.setItem('quiz_scores', JSON.stringify(scores));
+        document.getElementById('saveScoreGroup').style.display = 'none';
+        renderLeaderboard();
+    }
+
+    function renderLeaderboard() {
+        const list = document.getElementById('leaderboardList');
+        const scores = JSON.parse(localStorage.getItem('quiz_scores') || '[]');
+        list.innerHTML = scores.length === 0 ? '<li style="text-align:center; color:#7a8b9e;">Henüz skor kaydedilmedi.</li>' : '';
+        
+        scores.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.className = 'leaderboard-item';
+            li.innerHTML = `<span><b>${index + 1}.</b> ${item.name}</span> <span style="color:var(--accent-color); font-weight:bold;">${item.score}/5 Doğru</span>`;
+            list.appendChild(li);
+        });
     }
 
     function restartQuiz() {
         correctCount = 0;
         wrongCount = 0;
         bombInput = "";
+        clearInterval(timerInterval);
         updateBombDisplay();
+        document.getElementById('saveScoreGroup').style.display = 'flex';
         document.getElementById('result').style.display = 'none';
         document.getElementById('q1').style.display = 'block';
     }
