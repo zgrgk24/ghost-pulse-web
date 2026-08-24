@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Özgür'ü Ne Kadar Tanıyorsun? - Garanti Sürüm</title>
+    <title>Özgür'ü Ne Kadar Tanıyorsun?</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
@@ -64,7 +64,6 @@
             font-weight: 600;
         }
 
-        /* SHAKE ANIMATION */
         .shake { animation: shake 0.4s; }
         @keyframes shake {
             0% { transform: translate(1px, 1px); }
@@ -75,7 +74,6 @@
             100% { transform: translate(1px, -2px); }
         }
 
-        /* GRID YAPILARI */
         .image-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -86,7 +84,7 @@
             background: #1c2738;
             border: 2px solid #2a364f;
             border-radius: 15px;
-            padding: 15px;
+            padding: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
@@ -102,11 +100,17 @@
             box-shadow: 0 8px 20px rgba(0, 230, 118, 0.35);
         }
 
-        .image-card svg, .image-card img {
-            width: 70px;
-            height: 70px;
+        .image-card img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .image-card.animal-card img {
             object-fit: cover;
-            border-radius: 8px;
+            border-radius: 10px;
+            width: 100%;
+            height: 90px;
         }
 
         .image-card span {
@@ -114,7 +118,6 @@
             font-size: 15px;
         }
 
-        /* RENK GRID */
         .color-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -145,7 +148,6 @@
             border-radius: 8px;
         }
 
-        /* METIN BUTONLARI */
         .btn-grid {
             display: flex;
             flex-direction: column;
@@ -170,7 +172,6 @@
             border-color: var(--accent-color);
         }
 
-        /* CS BOMBA EKRANI */
         .cs-bomb-container {
             background: var(--cs-bomb-bg);
             border: 3px solid #3a4b6e;
@@ -214,7 +215,6 @@
         .key-btn.clear { background: #d32f2f; }
         .key-btn.submit { background: #388e3c; }
 
-        /* SONUC EKRANI */
         .answers-section, .leaderboard-section {
             background: #1c2738;
             border: 1px solid #2a364f;
@@ -327,46 +327,21 @@
         </div>
     </div>
 
-    <!-- 4. SORU: TAKIMLAR (KIRILMAZ EMBEDDED LOGOLAR) -->
+    <!-- 4. SORU: TAKIMLAR -->
     <div id="q4" class="quiz-step" style="display: none;">
         <div class="question-title">4) Hangi takımlıyım?</div>
         <div class="image-grid">
             <div class="image-card" onclick="checkAnswer(4, 'Galatasaray')">
-                <!-- GS LOGO -->
-                <svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="45" fill="#A90429"/>
-                    <text x="32" y="62" font-size="38" font-weight="bold" fill="#FDB913">G</text>
-                    <text x="50" y="68" font-size="38" font-weight="bold" fill="#A90429" stroke="#FDB913" stroke-width="2">S</text>
-                </svg>
+                <img src="gs.png" alt="Galatasaray">
                 <span>Galatasaray</span>
             </div>
             <div class="image-card" onclick="checkAnswer(4, 'Fenerbahçe')">
-                <!-- FB LOGO -->
-                <svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="45" fill="#002d62"/>
-                    <circle cx="50" cy="50" r="35" fill="#fff200"/>
-                    <text x="32" y="60" font-size="30" font-weight="bold" fill="#002d62">FB</text>
-                </svg>
+                <img src="fb.png" alt="Fenerbahçe">
                 <span>Fenerbahçe</span>
             </div>
             <div class="image-card" onclick="checkAnswer(4, 'Beşiktaş')">
-                <!-- BJK LOGO -->
-                <svg viewBox="0 0 100 100">
-                    <rect x="15" y="10" width="70" height="80" rx="15" fill="#ffffff" stroke="#000000" stroke-width="4"/>
-                    <rect x="25" y="45" width="10" height="35" fill="#000000"/>
-                    <rect x="45" y="45" width="10" height="35" fill="#000000"/>
-                    <rect x="65" y="45" width="10" height="35" fill="#000000"/>
-                    <text x="22" y="35" font-size="20" font-weight="bold" fill="#000">BJK</text>
-                </svg>
+                <img src="bjk.png" alt="Beşiktaş">
                 <span>Beşiktaş</span>
-            </div>
-            <div class="image-card" onclick="checkAnswer(4, 'Trabzonspor')">
-                <!-- TS LOGO -->
-                <svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="45" fill="#6B1F38"/>
-                    <text x="32" y="62" font-size="36" font-weight="bold" fill="#75C5F0">TS</text>
-                </svg>
-                <span>Trabzonspor</span>
             </div>
         </div>
     </div>
@@ -375,28 +350,20 @@
     <div id="q5" class="quiz-step" style="display: none;">
         <div class="question-title">5) En sevdiğim hayvan hangisidir?</div>
         <div class="image-grid">
-            <div class="image-card" onclick="checkAnswer(5, 'Tilki')">
-                <i class="fa-solid fa-shield-cat" style="font-size: 45px; color: #ff7043;"></i>
+            <div class="image-card animal-card" onclick="checkAnswer(5, 'Tilki')">
+                <img src="tilki.jpg" alt="Tilki">
                 <span>Tilki</span>
             </div>
-            <div class="image-card" onclick="checkAnswer(5, 'Kedi')">
-                <i class="fa-solid fa-cat" style="font-size: 45px; color: #ffa726;"></i>
+            <div class="image-card animal-card" onclick="checkAnswer(5, 'Kedi')">
+                <img src="kedi.jpg" alt="Kedi">
                 <span>Kedi</span>
             </div>
-            <div class="image-card" onclick="checkAnswer(5, 'Köpek')">
-                <i class="fa-solid fa-dog" style="font-size: 45px; color: #8d6e63;"></i>
+            <div class="image-card animal-card" onclick="checkAnswer(5, 'Köpek')">
+                <img src="kopek.jpg" alt="Köpek">
                 <span>Köpek</span>
             </div>
-            <div class="image-card" onclick="checkAnswer(5, 'Kurt')">
-                <!-- KURT VEKTÖREL SİMGESİ -->
-                <svg viewBox="0 0 100 100">
-                    <polygon points="50,15 20,40 30,85 70,85 80,40" fill="#78909c"/>
-                    <polygon points="35,30 20,5 45,25" fill="#455a64"/>
-                    <polygon points="65,30 80,5 55,25" fill="#455a64"/>
-                    <circle cx="38" cy="45" r="4" fill="#00e676"/>
-                    <circle cx="62" cy="45" r="4" fill="#00e676"/>
-                    <polygon points="50,60 43,50 57,50" fill="#212121"/>
-                </svg>
+            <div class="image-card animal-card" onclick="checkAnswer(5, 'Kurt')">
+                <img src="kurt.jpg" alt="Kurt">
                 <span>Kurt</span>
             </div>
         </div>
