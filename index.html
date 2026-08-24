@@ -6,6 +6,9 @@
     <title>Özgür'ü Ne Kadar Tanıyorsun?</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <!-- Firebase Veritabanı Kütüphaneleri -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <style>
         :root {
             --bg-color: #0b0e14;
@@ -408,7 +411,15 @@
 <footer>Yapımcı: <b>Özgür Gök</b></footer>
 
 <script>
-    const MYJSON_URL = "https://myjson.online/api/quick/ee4007fc-2a84-4103-ba2b-4b1e27e4651d";
+    // Ortak Firebase Veritabanı Yapılandırması
+    const firebaseConfig = {
+        databaseURL: "https://ozgur-quiz-default-rtdb.europe-west1.firebasedatabase.app"
+    };
+
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.database();
 
     let correctCount = 0;
     let wrongCount = 0;
@@ -478,58 +489,50 @@
         fetchLeaderboard();
     }
 
-    async function fetchLeaderboard() {
+    function fetchLeaderboard() {
         const list = document.getElementById('leaderboardList');
-        try {
-            const res = await fetch(MYJSON_URL);
-            const scores = await res.json();
-            
-            list.innerHTML = (!Array.isArray(scores) || scores.length === 0) 
-                ? '<li style="color:#7a8b9e; text-align:center;">Henüz skor yok.</li>' 
-                : '';
+        db.ref('scores').orderByChild('score').limitToLast(10).once('value', (snapshot) => {
+            const scores = [];
+            snapshot.forEach((child) => {
+                scores.push(child.val());
+            });
+            scores.reverse();
 
-            if (Array.isArray(scores)) {
-                scores.sort((a, b) => b.score - a.score).slice(0, 10).forEach((item, i) => {
-                    list.innerHTML += `<li class="leaderboard-item"><span><b>${i + 1}.</b> ${item.name}</span> <b style="color:var(--accent-color);">${item.score}/6</b></li>`;
-                });
-            }
-        } catch (e) {
+            list.innerHTML = scores.length === 0 ? '<li style="color:#7a8b9e; text-align:center;">Henüz skor yok.</li>' : '';
+            scores.forEach((item, i) => {
+                list.innerHTML += `<li class="leaderboard-item"><span><b>${i + 1}.</b> ${item.name}</span> <b style="color:var(--accent-color);">${item.score}/6</b></li>`;
+            });
+        }, (error) => {
             list.innerHTML = '<li style="color:#ff3333; text-align:center;">Skorlar yüklenemedi.</li>';
-        }
+        });
     }
 
-    async function saveScore() {
+    function saveScore() {
         const name = document.getElementById('playerName').value.trim() || 'Anonim';
         const saveBtn = document.getElementById('saveBtn');
         saveBtn.innerText = "Kaydediliyor...";
         saveBtn.disabled = true;
 
-        try {
-            const res = await fetch(MYJSON_URL);
-            let scores = await res.json();
-            if (!Array.isArray(scores)) scores = [];
-            
-            scores.push({ name: name, score: correctCount });
-
-            await fetch(MYJSON_URL, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(scores)
-            });
-
+        db.ref('scores').push({
+            name: name,
+            score: correctCount,
+            timestamp: Date.now()
+        }).then(() => {
             document.getElementById('saveScoreGroup').style.display = 'none';
             fetchLeaderboard();
-        } catch (e) {
-            alert("Skor kaydedilirken hata oluştu!");
+        }).catch((error) => {
+            alert("Skor kaydedilirken bir hata oluştu!");
             saveBtn.innerText = "Skoru Kaydet";
             saveBtn.disabled = false;
-        }
+        });
     }
 
     function restartQuiz() {
         correctCount = 0; wrongCount = 0; bombInput = "";
         updateBombDisplay();
         document.getElementById('saveScoreGroup').style.display = 'flex';
+        document.getElementById('saveBtn').innerText = "Skoru Kaydet";
+        document.getElementById('saveBtn').disabled = false;
         document.getElementById('result').style.display = 'none';
         document.getElementById('q1').style.display = 'block';
     }
