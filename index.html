@@ -6,9 +6,6 @@
     <title>Özgür'ü Ne Kadar Tanıyorsun?</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <!-- Firebase Veritabanı Kütüphaneleri -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <style>
         :root {
             --bg-color: #0b0e14;
@@ -411,15 +408,9 @@
 <footer>Yapımcı: <b>Özgür Gök</b></footer>
 
 <script>
-    // Ortak Firebase Veritabanı Yapılandırması
-    const firebaseConfig = {
-        databaseURL: "https://ozgur-quiz-default-rtdb.europe-west1.firebasedatabase.app"
-    };
-
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
-    const db = firebase.database();
+    const BIN_ID = "661273911f5677401f486411"; // Ortak Veritabanı Odası
+    const API_KEY = "$2a$10$UvA/pYxLwB2/0y2B.k3E/.L1W4jU/Hsh.eC23lqD85i2kM7GvR3j2";
+    const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
     let correctCount = 0;
     let wrongCount = 0;
@@ -489,42 +480,55 @@
         fetchLeaderboard();
     }
 
-    function fetchLeaderboard() {
+    async function fetchLeaderboard() {
         const list = document.getElementById('leaderboardList');
-        db.ref('scores').orderByChild('score').limitToLast(10).once('value', (snapshot) => {
-            const scores = [];
-            snapshot.forEach((child) => {
-                scores.push(child.val());
+        try {
+            const res = await fetch(API_URL, {
+                headers: { "X-Master-Key": API_KEY }
             });
-            scores.reverse();
+            const data = await res.json();
+            const scores = data.record || [];
 
             list.innerHTML = scores.length === 0 ? '<li style="color:#7a8b9e; text-align:center;">Henüz skor yok.</li>' : '';
-            scores.forEach((item, i) => {
+            scores.sort((a, b) => b.score - a.score).slice(0, 10).forEach((item, i) => {
                 list.innerHTML += `<li class="leaderboard-item"><span><b>${i + 1}.</b> ${item.name}</span> <b style="color:var(--accent-color);">${item.score}/6</b></li>`;
             });
-        }, (error) => {
+        } catch (e) {
             list.innerHTML = '<li style="color:#ff3333; text-align:center;">Skorlar yüklenemedi.</li>';
-        });
+        }
     }
 
-    function saveScore() {
+    async function saveScore() {
         const name = document.getElementById('playerName').value.trim() || 'Anonim';
         const saveBtn = document.getElementById('saveBtn');
         saveBtn.innerText = "Kaydediliyor...";
         saveBtn.disabled = true;
 
-        db.ref('scores').push({
-            name: name,
-            score: correctCount,
-            timestamp: Date.now()
-        }).then(() => {
+        try {
+            const res = await fetch(API_URL, {
+                headers: { "X-Master-Key": API_KEY }
+            });
+            const data = await res.json();
+            let scores = data.record || [];
+
+            scores.push({ name: name, score: correctCount });
+
+            await fetch(API_URL, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Master-Key': API_KEY
+                },
+                body: JSON.stringify(scores)
+            });
+
             document.getElementById('saveScoreGroup').style.display = 'none';
             fetchLeaderboard();
-        }).catch((error) => {
-            alert("Skor kaydedilirken bir hata oluştu!");
+        } catch (e) {
+            alert("Kaydedilirken bir hata oluştu!");
             saveBtn.innerText = "Skoru Kaydet";
             saveBtn.disabled = false;
-        });
+        }
     }
 
     function restartQuiz() {
