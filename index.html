@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Özgür'ü Ne Kadar Tanıyorsun? - Ultra Sürüm</title>
+    <title>Özgür'ü Ne Kadar Tanıyorsun? - Garanti Sürüm</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
@@ -11,7 +11,6 @@
             --bg-color: #0b0e14;
             --card-bg: #151d2a;
             --accent-color: #00e676;
-            --accent-hover: #00b359;
             --danger-color: #ff3333;
             --text-color: #e0e6ed;
             --cs-bomb-bg: #11161f;
@@ -57,7 +56,6 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            text-shadow: 0 0 12px rgba(0, 230, 118, 0.5);
         }
 
         .question-title {
@@ -67,19 +65,17 @@
         }
 
         /* SHAKE ANIMATION */
-        .shake {
-            animation: shake 0.4s;
-        }
+        .shake { animation: shake 0.4s; }
         @keyframes shake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); }
-            80% { transform: translate(1px, 2px) rotate(-1deg); }
-            100% { transform: translate(1px, -2px) rotate(0deg); }
+            0% { transform: translate(1px, 1px); }
+            20% { transform: translate(-3px, 0px); }
+            40% { transform: translate(1px, -1px); }
+            60% { transform: translate(-3px, 1px); }
+            80% { transform: translate(1px, 2px); }
+            100% { transform: translate(1px, -2px); }
         }
 
-        /* RESİMLİ ŞIK GRID YAPISI */
+        /* GRID YAPILARI */
         .image-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -90,7 +86,7 @@
             background: #1c2738;
             border: 2px solid #2a364f;
             border-radius: 15px;
-            padding: 12px;
+            padding: 15px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
@@ -102,21 +98,15 @@
 
         .image-card:hover {
             border-color: var(--accent-color);
-            transform: translateY(-5px) scale(1.02);
+            transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0, 230, 118, 0.35);
         }
 
-        .image-card img {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-        }
-
-        .image-card.animal-card img {
+        .image-card svg, .image-card img {
+            width: 70px;
+            height: 70px;
             object-fit: cover;
-            border-radius: 10px;
-            width: 100%;
-            height: 100px;
+            border-radius: 8px;
         }
 
         .image-card span {
@@ -124,7 +114,7 @@
             font-size: 15px;
         }
 
-        /* RENKLER GRID */
+        /* RENK GRID */
         .color-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -147,7 +137,6 @@
         .color-card:hover {
             border-color: var(--accent-color);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,230,118,0.3);
         }
 
         .color-box {
@@ -156,7 +145,7 @@
             border-radius: 8px;
         }
 
-        /* METİN ŞIKLARI */
+        /* METIN BUTONLARI */
         .btn-grid {
             display: flex;
             flex-direction: column;
@@ -173,38 +162,32 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            letter-spacing: 1px;
         }
 
         .option-btn:hover {
             background: var(--accent-color);
             color: #000;
             border-color: var(--accent-color);
-            box-shadow: 0 0 15px rgba(0,230,118,0.5);
-            transform: scale(1.01);
         }
 
-        /* CS BOMBA EKRANI VE TUŞ TAKIMI */
+        /* CS BOMBA EKRANI */
         .cs-bomb-container {
             background: var(--cs-bomb-bg);
             border: 3px solid #3a4b6e;
             border-radius: 15px;
             padding: 20px;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
         }
 
         .bomb-screen {
             background: #050a0e;
             border: 2px solid var(--danger-color);
             color: var(--danger-color);
-            font-family: 'Courier New', Courier, monospace;
+            font-family: monospace;
             font-size: 32px;
             font-weight: bold;
             padding: 10px;
             border-radius: 8px;
             margin-bottom: 20px;
-            letter-spacing: 5px;
-            text-shadow: 0 0 8px rgba(255, 51, 51, 0.7);
             height: 60px;
             display: flex;
             align-items: center;
@@ -226,89 +209,33 @@
             padding: 12px;
             border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 4px 0 #151d2a;
-        }
-
-        .key-btn:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #151d2a;
         }
 
         .key-btn.clear { background: #d32f2f; }
         .key-btn.submit { background: #388e3c; }
 
-        /* SONUÇ & CEVAP ANAHTARI */
-        .result-box {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .answers-section {
+        /* SONUC EKRANI */
+        .answers-section, .leaderboard-section {
             background: #1c2738;
             border: 1px solid #2a364f;
             border-radius: 12px;
             padding: 15px;
             text-align: left;
+            margin-top: 10px;
         }
 
-        .answers-section h3 {
-            color: var(--accent-color);
-            margin-bottom: 10px;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .answer-item {
+        .answer-item, .leaderboard-item {
             font-size: 14px;
             padding: 6px 0;
             border-bottom: 1px solid #2a364f;
             display: flex;
             justify-content: space-between;
-        }
-
-        .answer-item:last-child {
-            border-bottom: none;
-        }
-
-        .answer-item span.val {
-            color: var(--accent-color);
-            font-weight: bold;
-        }
-
-        .leaderboard-section {
-            background: #1c2738;
-            border-radius: 12px;
-            padding: 15px;
-            text-align: left;
-        }
-
-        .leaderboard-section h3 {
-            color: var(--accent-color);
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-
-        .leaderboard-list {
-            list-style: none;
-            max-height: 120px;
-            overflow-y: auto;
-        }
-
-        .leaderboard-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 0;
-            border-bottom: 1px solid #2a364f;
-            font-size: 14px;
         }
 
         .name-input-group {
             display: flex;
             gap: 10px;
-            margin-top: 5px;
+            margin-top: 10px;
         }
 
         .name-input-group input {
@@ -339,18 +266,14 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 5px;
+            width: 100%;
+            margin-top: 15px;
         }
 
         footer {
             margin-top: 20px;
             font-size: 14px;
             color: #7a8b9e;
-            font-weight: 500;
-        }
-
-        footer b {
-            color: var(--accent-color);
         }
     </style>
 </head>
@@ -393,7 +316,7 @@
         </div>
     </div>
 
-    <!-- 3. SORU: DOĞUM TARİHİ -->
+    <!-- 3. SORU -->
     <div id="q3" class="quiz-step" style="display: none;">
         <div class="question-title">3) Doğum tarihim nedir?</div>
         <div class="btn-grid">
@@ -404,53 +327,82 @@
         </div>
     </div>
 
-    <!-- 4. SORU: TAKIM SORUSU (LOGOLU) -->
+    <!-- 4. SORU: TAKIMLAR (KIRILMAZ EMBEDDED LOGOLAR) -->
     <div id="q4" class="quiz-step" style="display: none;">
         <div class="question-title">4) Hangi takımlıyım?</div>
         <div class="image-grid">
             <div class="image-card" onclick="checkAnswer(4, 'Galatasaray')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f6/Galatasaray_Sports_Club_Logo.svg" alt="Galatasaray">
+                <!-- GS LOGO -->
+                <svg viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="#A90429"/>
+                    <text x="32" y="62" font-size="38" font-weight="bold" fill="#FDB913">G</text>
+                    <text x="50" y="68" font-size="38" font-weight="bold" fill="#A90429" stroke="#FDB913" stroke-width="2">S</text>
+                </svg>
                 <span>Galatasaray</span>
             </div>
             <div class="image-card" onclick="checkAnswer(4, 'Fenerbahçe')">
-                <img src="https://upload.wikimedia.org/wikipedia/tr/8/86/Fenerbah%C3%A7e_SK.png" alt="Fenerbahçe">
+                <!-- FB LOGO -->
+                <svg viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="#002d62"/>
+                    <circle cx="50" cy="50" r="35" fill="#fff200"/>
+                    <text x="32" y="60" font-size="30" font-weight="bold" fill="#002d62">FB</text>
+                </svg>
                 <span>Fenerbahçe</span>
             </div>
             <div class="image-card" onclick="checkAnswer(4, 'Beşiktaş')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Besiktas_JK_Logo_Official.png" alt="Beşiktaş">
+                <!-- BJK LOGO -->
+                <svg viewBox="0 0 100 100">
+                    <rect x="15" y="10" width="70" height="80" rx="15" fill="#ffffff" stroke="#000000" stroke-width="4"/>
+                    <rect x="25" y="45" width="10" height="35" fill="#000000"/>
+                    <rect x="45" y="45" width="10" height="35" fill="#000000"/>
+                    <rect x="65" y="45" width="10" height="35" fill="#000000"/>
+                    <text x="22" y="35" font-size="20" font-weight="bold" fill="#000">BJK</text>
+                </svg>
                 <span>Beşiktaş</span>
             </div>
             <div class="image-card" onclick="checkAnswer(4, 'Trabzonspor')">
-                <img src="https://upload.wikimedia.org/wikipedia/tr/a/ab/Trabzonspor_Amblemi.png" alt="Trabzonspor">
+                <!-- TS LOGO -->
+                <svg viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="#6B1F38"/>
+                    <text x="32" y="62" font-size="36" font-weight="bold" fill="#75C5F0">TS</text>
+                </svg>
                 <span>Trabzonspor</span>
             </div>
         </div>
     </div>
 
-    <!-- 5. SORU: HAYVAN SORUSU (RESİMLİ) -->
+    <!-- 5. SORU: HAYVANLAR -->
     <div id="q5" class="quiz-step" style="display: none;">
         <div class="question-title">5) En sevdiğim hayvan hangisidir?</div>
         <div class="image-grid">
-            <div class="image-card animal-card" onclick="checkAnswer(5, 'Tilki')">
-                <img src="https://images.unsplash.com/photo-1474511320723-9a56873867b5?auto=format&fit=crop&w=300&q=80" alt="Tilki">
+            <div class="image-card" onclick="checkAnswer(5, 'Tilki')">
+                <i class="fa-solid fa-shield-cat" style="font-size: 45px; color: #ff7043;"></i>
                 <span>Tilki</span>
             </div>
-            <div class="image-card animal-card" onclick="checkAnswer(5, 'Kedi')">
-                <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=300&q=80" alt="Kedi">
+            <div class="image-card" onclick="checkAnswer(5, 'Kedi')">
+                <i class="fa-solid fa-cat" style="font-size: 45px; color: #ffa726;"></i>
                 <span>Kedi</span>
             </div>
-            <div class="image-card animal-card" onclick="checkAnswer(5, 'Köpek')">
-                <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=300&q=80" alt="Köpek">
+            <div class="image-card" onclick="checkAnswer(5, 'Köpek')">
+                <i class="fa-solid fa-dog" style="font-size: 45px; color: #8d6e63;"></i>
                 <span>Köpek</span>
             </div>
-            <div class="image-card animal-card" onclick="checkAnswer(5, 'Kurt')">
-                <img src="https://images.unsplash.com/photo-1564349683136-77e08dba1ef9?auto=format&fit=crop&w=300&q=80" alt="Kurt">
+            <div class="image-card" onclick="checkAnswer(5, 'Kurt')">
+                <!-- KURT VEKTÖREL SİMGESİ -->
+                <svg viewBox="0 0 100 100">
+                    <polygon points="50,15 20,40 30,85 70,85 80,40" fill="#78909c"/>
+                    <polygon points="35,30 20,5 45,25" fill="#455a64"/>
+                    <polygon points="65,30 80,5 55,25" fill="#455a64"/>
+                    <circle cx="38" cy="45" r="4" fill="#00e676"/>
+                    <circle cx="62" cy="45" r="4" fill="#00e676"/>
+                    <polygon points="50,60 43,50 57,50" fill="#212121"/>
+                </svg>
                 <span>Kurt</span>
             </div>
         </div>
     </div>
 
-    <!-- 6. SORU: CS BOMBA EKRANI (SAYACSIZ) -->
+    <!-- 6. SORU: CS BOMBA -->
     <div id="q6" class="quiz-step" style="display: none;">
         <div class="question-title">6) Favori sayım nedir? (Bomba İmha Kodu)</div>
         <div class="cs-bomb-container">
@@ -474,46 +426,40 @@
 
     <!-- SONUÇ EKRANI -->
     <div id="result" class="quiz-step" style="display: none;">
-        <div class="result-box">
-            <h2><i class="fa-solid fa-trophy" style="color: #ffd700;"></i> Test Bitti!</h2>
-            <p id="scoreText" style="font-size: 20px; font-weight: bold;"></p>
-            
-            <div class="name-input-group" id="saveScoreGroup">
-                <input type="text" id="playerName" placeholder="Adını yaz..." maxlength="15">
-                <button class="save-btn" onclick="saveScore()">Skoru Kaydet</button>
-            </div>
-
-            <!-- CEVAP ANAHTARI -->
-            <div class="answers-section">
-                <h3><i class="fa-solid fa-square-check"></i> Cevap Anahtarı</h3>
-                <div class="answer-item"><span>1. En Sevdiğim Renk:</span> <span class="val">Mavi</span></div>
-                <div class="answer-item"><span>2. Benimle İlgili Kod:</span> <span class="val">ZGRGK</span></div>
-                <div class="answer-item"><span>3. Doğum Tarihim:</span> <span class="val">24 Mayıs</span></div>
-                <div class="answer-item"><span>4. Takımım:</span> <span class="val">Beşiktaş</span></div>
-                <div class="answer-item"><span>5. En Sevdiğim Hayvan:</span> <span class="val">Tilki</span></div>
-                <div class="answer-item"><span>6. Favori Sayım:</span> <span class="val">24</span></div>
-            </div>
-
-            <div class="leaderboard-section">
-                <h3><i class="fa-solid fa-list-ol"></i> En Yüksek Skorlar</h3>
-                <ul class="leaderboard-list" id="leaderboardList"></ul>
-            </div>
-
-            <button class="restart-btn" onclick="restartQuiz()">Tekrar Çöz</button>
+        <h2><i class="fa-solid fa-trophy" style="color: #ffd700;"></i> Test Bitti!</h2>
+        <p id="scoreText" style="font-size: 20px; font-weight: bold; margin: 10px 0;"></p>
+        
+        <div class="name-input-group" id="saveScoreGroup">
+            <input type="text" id="playerName" placeholder="Adını yaz..." maxlength="15">
+            <button class="save-btn" onclick="saveScore()">Skoru Kaydet</button>
         </div>
+
+        <div class="answers-section">
+            <h3 style="color: var(--accent-color);"><i class="fa-solid fa-square-check"></i> Cevap Anahtarı</h3>
+            <div class="answer-item"><span>1. En Sevdiğim Renk:</span> <b>Mavi</b></div>
+            <div class="answer-item"><span>2. Benimle İlgili Kod:</span> <b>ZGRGK</b></div>
+            <div class="answer-item"><span>3. Doğum Tarihim:</span> <b>24 Mayıs</b></div>
+            <div class="answer-item"><span>4. Takımım:</span> <b>Beşiktaş</b></div>
+            <div class="answer-item"><span>5. En Sevdiğim Hayvan:</span> <b>Tilki</b></div>
+            <div class="answer-item"><span>6. Favori Sayım:</span> <b>24</b></div>
+        </div>
+
+        <div class="leaderboard-section">
+            <h3 style="color: var(--accent-color);"><i class="fa-solid fa-list-ol"></i> Skor Tablosu</h3>
+            <ul id="leaderboardList" style="list-style:none;"></ul>
+        </div>
+
+        <button class="restart-btn" onclick="restartQuiz()">Tekrar Çöz</button>
     </div>
 </div>
 
-<footer>
-    Yapımcı: <b>Özgür Gök</b>
-</footer>
+<footer>Yapımcı: <b>Özgür Gök</b></footer>
 
 <script>
     let correctCount = 0;
     let wrongCount = 0;
     let bombInput = "";
 
-    // WEB AUDIO API - SES EFEKTLERİ
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
     function playSound(freq, type, duration) {
@@ -531,68 +477,42 @@
     }
 
     function playBeep() { playSound(800, 'sine', 0.1); }
-    function playCorrect() { playSound(523.25, 'triangle', 0.2); setTimeout(()=>playSound(659.25, 'triangle', 0.3), 100); }
+    function playCorrect() { playSound(523.25, 'triangle', 0.2); }
     function playWrong() { playSound(150, 'sawtooth', 0.3); triggerShake(); }
 
     function triggerShake() {
-        const container = document.getElementById('quizContainer');
-        container.classList.add('shake');
-        setTimeout(() => container.classList.remove('shake'), 400);
+        const c = document.getElementById('quizContainer');
+        c.classList.add('shake');
+        setTimeout(() => c.classList.remove('shake'), 400);
     }
 
-    function checkAnswer(questionNum, answer) {
-        if (questionNum === 1) {
-            if (answer === 'Mavi') { correctCount++; playCorrect(); } else { wrongCount++; playWrong(); }
-            document.getElementById('q1').style.display = 'none';
-            document.getElementById('q2').style.display = 'block';
-        } else if (questionNum === 2) {
-            if (answer === 'ZGRGK') { correctCount++; playCorrect(); } else { wrongCount++; playWrong(); }
-            document.getElementById('q2').style.display = 'none';
-            document.getElementById('q3').style.display = 'block';
-        } else if (questionNum === 3) {
-            if (answer === '24 Mayıs') { correctCount++; playCorrect(); } else { wrongCount++; playWrong(); }
-            document.getElementById('q3').style.display = 'none';
-            document.getElementById('q4').style.display = 'block';
-        } else if (questionNum === 4) {
-            if (answer === 'Beşiktaş') { correctCount++; playCorrect(); } else { wrongCount++; playWrong(); }
-            document.getElementById('q4').style.display = 'none';
-            document.getElementById('q5').style.display = 'block';
-        } else if (questionNum === 5) {
-            if (answer === 'Tilki') { correctCount++; playCorrect(); } else { wrongCount++; playWrong(); }
-            document.getElementById('q5').style.display = 'none';
-            document.getElementById('q6').style.display = 'block';
-        }
+    function checkAnswer(q, answer) {
+        if (q === 1) { (answer === 'Mavi') ? (correctCount++, playCorrect()) : (wrongCount++, playWrong()); nextQ('q1','q2'); }
+        else if (q === 2) { (answer === 'ZGRGK') ? (correctCount++, playCorrect()) : (wrongCount++, playWrong()); nextQ('q2','q3'); }
+        else if (q === 3) { (answer === '24 Mayıs') ? (correctCount++, playCorrect()) : (wrongCount++, playWrong()); nextQ('q3','q4'); }
+        else if (q === 4) { (answer === 'Beşiktaş') ? (correctCount++, playCorrect()) : (wrongCount++, playWrong()); nextQ('q4','q5'); }
+        else if (q === 5) { (answer === 'Tilki') ? (correctCount++, playCorrect()) : (wrongCount++, playWrong()); nextQ('q5','q6'); }
+    }
+
+    function nextQ(curr, next) {
+        document.getElementById(curr).style.display = 'none';
+        document.getElementById(next).style.display = 'block';
     }
 
     function pressKey(num) {
         playBeep();
-        if (bombInput.length < 2) {
-            bombInput += num;
-            updateBombDisplay();
-        }
+        if (bombInput.length < 2) { bombInput += num; updateBombDisplay(); }
     }
 
-    function clearKey() {
-        playBeep();
-        bombInput = "";
-        updateBombDisplay();
-    }
+    function clearKey() { playBeep(); bombInput = ""; updateBombDisplay(); }
 
     function updateBombDisplay() {
-        const display = document.getElementById('bombDisplay');
-        if (bombInput.length === 0) display.innerText = "_ _";
-        else if (bombInput.length === 1) display.innerText = bombInput + " _";
-        else display.innerText = bombInput;
+        const d = document.getElementById('bombDisplay');
+        d.innerText = bombInput.length === 0 ? "_ _" : (bombInput.length === 1 ? bombInput + " _" : bombInput);
     }
 
     function submitBomb() {
-        if (bombInput === "24") {
-            correctCount++;
-            playCorrect();
-        } else {
-            wrongCount++;
-            playWrong();
-        }
+        (bombInput === "24") ? (correctCount++, playCorrect()) : (wrongCount++, playWrong());
         document.getElementById('q6').style.display = 'none';
         showResult();
     }
@@ -600,28 +520,16 @@
     function showResult() {
         document.getElementById('result').style.display = 'block';
         document.getElementById('scoreText').innerText = `Doğru: ${correctCount} | Yanlış: ${wrongCount}`;
-        
-        // Konfeti patlatma
-        if (correctCount >= 4 && typeof confetti === 'function') {
-            confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
-        }
-        
-        playSound(400, 'sine', 0.2);
-        setTimeout(() => playSound(600, 'sine', 0.4), 200);
-
+        if (correctCount >= 4 && typeof confetti === 'function') confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
         renderLeaderboard();
     }
 
     function saveScore() {
-        const nameInput = document.getElementById('playerName');
-        const name = nameInput.value.trim() || 'Anonim';
-        
+        const name = document.getElementById('playerName').value.trim() || 'Anonim';
         let scores = JSON.parse(localStorage.getItem('quiz_scores') || '[]');
         scores.push({ name: name, score: correctCount });
         scores.sort((a, b) => b.score - a.score);
-        scores = scores.slice(0, 5); // İlk 5 kişi
-        
-        localStorage.setItem('quiz_scores', JSON.stringify(scores));
+        localStorage.setItem('quiz_scores', JSON.stringify(scores.slice(0, 5)));
         document.getElementById('saveScoreGroup').style.display = 'none';
         renderLeaderboard();
     }
@@ -629,20 +537,14 @@
     function renderLeaderboard() {
         const list = document.getElementById('leaderboardList');
         const scores = JSON.parse(localStorage.getItem('quiz_scores') || '[]');
-        list.innerHTML = scores.length === 0 ? '<li style="text-align:center; color:#7a8b9e;">Henüz skor kaydedilmedi.</li>' : '';
-        
-        scores.forEach((item, index) => {
-            const li = document.createElement('li');
-            li.className = 'leaderboard-item';
-            li.innerHTML = `<span><b>${index + 1}.</b> ${item.name}</span> <span style="color:var(--accent-color); font-weight:bold;">${item.score}/6 Doğru</span>`;
-            list.appendChild(li);
+        list.innerHTML = scores.length === 0 ? '<li style="color:#7a8b9e; text-align:center;">Henüz skor yok.</li>' : '';
+        scores.forEach((item, i) => {
+            list.innerHTML += `<li class="leaderboard-item"><span><b>${i + 1}.</b> ${item.name}</span> <b style="color:var(--accent-color);">${item.score}/6</b></li>`;
         });
     }
 
     function restartQuiz() {
-        correctCount = 0;
-        wrongCount = 0;
-        bombInput = "";
+        correctCount = 0; wrongCount = 0; bombInput = "";
         updateBombDisplay();
         document.getElementById('saveScoreGroup').style.display = 'flex';
         document.getElementById('result').style.display = 'none';
