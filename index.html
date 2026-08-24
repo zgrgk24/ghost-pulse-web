@@ -393,55 +393,66 @@
         </div>
     </div>
 
-    <!-- 3. SORU: TAKIM SORUSU (LOGOLU) -->
+    <!-- 3. SORU: DOĞUM TARİHİ -->
     <div id="q3" class="quiz-step" style="display: none;">
-        <div class="question-title">3) Hangi takımlıyım?</div>
+        <div class="question-title">3) Doğum tarihim nedir?</div>
+        <div class="btn-grid">
+            <button class="option-btn" onclick="checkAnswer(3, '12 Nisan')">12 Nisan</button>
+            <button class="option-btn" onclick="checkAnswer(3, '24 Mayıs')">24 Mayıs</button>
+            <button class="option-btn" onclick="checkAnswer(3, '18 Ağustos')">18 Ağustos</button>
+            <button class="option-btn" onclick="checkAnswer(3, '05 Ocak')">05 Ocak</button>
+        </div>
+    </div>
+
+    <!-- 4. SORU: TAKIM SORUSU (LOGOLU) -->
+    <div id="q4" class="quiz-step" style="display: none;">
+        <div class="question-title">4) Hangi takımlıyım?</div>
         <div class="image-grid">
-            <div class="image-card" onclick="checkAnswer(3, 'Galatasaray')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f6/Galatasaray_Sports_Club_Logo.svg" alt="Galatasaray">
+            <div class="image-card" onclick="checkAnswer(4, 'Galatasaray')">
+                <img src="https://images.rawpixel.com/image_png_800/czNmY1MS1yYXctcGl4ZWwtY29tcGxldGUtc3R1ZGlvLXNldC1wcm9kdWN0LTAxLXRyYW5zcGFyZW50LTAxXzEucG5n.png" alt="Galatasaray" onerror="this.src='https://dummyimage.com/80x80/000/fff&text=GS'">
                 <span>Galatasaray</span>
             </div>
-            <div class="image-card" onclick="checkAnswer(3, 'Fenerbahçe')">
+            <div class="image-card" onclick="checkAnswer(4, 'Fenerbahçe')">
                 <img src="https://upload.wikimedia.org/wikipedia/tr/8/86/Fenerbah%C3%A7e_SK.png" alt="Fenerbahçe">
                 <span>Fenerbahçe</span>
             </div>
-            <div class="image-card" onclick="checkAnswer(3, 'Beşiktaş')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Besiktas_JK_Logo.svg" alt="Beşiktaş">
+            <div class="image-card" onclick="checkAnswer(4, 'Beşiktaş')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Besiktas_JK_Logo_Official.png" alt="Beşiktaş" onerror="this.src='https://dummyimage.com/80x80/000/fff&text=BJK'">
                 <span>Beşiktaş</span>
             </div>
-            <div class="image-card" onclick="checkAnswer(3, 'Trabzonspor')">
-                <img src="https://upload.wikimedia.org/wikipedia/tr/a/ab/Trabzonspor_Amblemi.png" alt="Trabzonspor">
+            <div class="image-card" onclick="checkAnswer(4, 'Trabzonspor')">
+                <img src="https://upload.wikimedia.org/wikipedia/tr/a/ab/Trabzonspor_Amblemi.png" alt="Trabzonspor" onerror="this.src='https://dummyimage.com/80x80/000/fff&text=TS'">
                 <span>Trabzonspor</span>
             </div>
         </div>
     </div>
 
-    <!-- 4. SORU: HAYVAN SORUSU (RESİMLİ) -->
-    <div id="q4" class="quiz-step" style="display: none;">
-        <div class="question-title">4) En sevdiğim hayvan hangisidir?</div>
+    <!-- 5. SORU: HAYVAN SORUSU (RESİMLİ) -->
+    <div id="q5" class="quiz-step" style="display: none;">
+        <div class="question-title">5) En sevdiğim hayvan hangisidir?</div>
         <div class="image-grid">
-            <div class="image-card animal-card" onclick="checkAnswer(4, 'Tilki')">
+            <div class="image-card animal-card" onclick="checkAnswer(5, 'Tilki')">
                 <img src="https://images.unsplash.com/photo-1474511320723-9a56873867b5?auto=format&fit=crop&w=300&q=80" alt="Tilki">
                 <span>Tilki</span>
             </div>
-            <div class="image-card animal-card" onclick="checkAnswer(4, 'Kedi')">
+            <div class="image-card animal-card" onclick="checkAnswer(5, 'Kedi')">
                 <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=300&q=80" alt="Kedi">
                 <span>Kedi</span>
             </div>
-            <div class="image-card animal-card" onclick="checkAnswer(4, 'Köpek')">
+            <div class="image-card animal-card" onclick="checkAnswer(5, 'Köpek')">
                 <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=300&q=80" alt="Köpek">
                 <span>Köpek</span>
             </div>
-            <div class="image-card animal-card" onclick="checkAnswer(4, 'Kurt')">
-                <img src="https://images.unsplash.com/photo-1564349683136-77e08dba1ef9?auto=format&fit=crop&w=300&q=80" alt="Kurt">
+            <div class="image-card animal-card" onclick="checkAnswer(5, 'Kurt')">
+                <img src="https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=300&q=80" alt="Kurt">
                 <span>Kurt</span>
             </div>
         </div>
     </div>
 
-    <!-- 5. SORU: CS BOMBA EKRANI (SAYACSIZ) -->
-    <div id="q5" class="quiz-step" style="display: none;">
-        <div class="question-title">5) Favori sayım nedir? (Bomba İmha Kodu)</div>
+    <!-- 6. SORU: CS BOMBA EKRANI (SAYACSIZ) -->
+    <div id="q6" class="quiz-step" style="display: none;">
+        <div class="question-title">6) Favori sayım nedir? (Bomba İmha Kodu)</div>
         <div class="cs-bomb-container">
             <div class="bomb-screen" id="bombDisplay">_ _</div>
             <div class="keypad">
@@ -477,9 +488,10 @@
                 <h3><i class="fa-solid fa-square-check"></i> Cevap Anahtarı</h3>
                 <div class="answer-item"><span>1. En Sevdiğim Renk:</span> <span class="val">Mavi</span></div>
                 <div class="answer-item"><span>2. Benimle İlgili Kod:</span> <span class="val">ZGRGK</span></div>
-                <div class="answer-item"><span>3. Takımım:</span> <span class="val">Beşiktaş</span></div>
-                <div class="answer-item"><span>4. En Sevdiğim Hayvan:</span> <span class="val">Tilki</span></div>
-                <div class="answer-item"><span>5. Favori Sayım:</span> <span class="val">24</span></div>
+                <div class="answer-item"><span>3. Doğum Tarihim:</span> <span class="val">24 Mayıs</span></div>
+                <div class="answer-item"><span>4. Takımım:</span> <span class="val">Beşiktaş</span></div>
+                <div class="answer-item"><span>5. En Sevdiğim Hayvan:</span> <span class="val">Tilki</span></div>
+                <div class="answer-item"><span>6. Favori Sayım:</span> <span class="val">24</span></div>
             </div>
 
             <div class="leaderboard-section">
@@ -538,13 +550,17 @@
             document.getElementById('q2').style.display = 'none';
             document.getElementById('q3').style.display = 'block';
         } else if (questionNum === 3) {
-            if (answer === 'Beşiktaş') { correctCount++; playCorrect(); } else { wrongCount++; playWrong(); }
+            if (answer === '24 Mayıs') { correctCount++; playCorrect(); } else { wrongCount++; playWrong(); }
             document.getElementById('q3').style.display = 'none';
             document.getElementById('q4').style.display = 'block';
         } else if (questionNum === 4) {
-            if (answer === 'Tilki') { correctCount++; playCorrect(); } else { wrongCount++; playWrong(); }
+            if (answer === 'Beşiktaş') { correctCount++; playCorrect(); } else { wrongCount++; playWrong(); }
             document.getElementById('q4').style.display = 'none';
             document.getElementById('q5').style.display = 'block';
+        } else if (questionNum === 5) {
+            if (answer === 'Tilki') { correctCount++; playCorrect(); } else { wrongCount++; playWrong(); }
+            document.getElementById('q5').style.display = 'none';
+            document.getElementById('q6').style.display = 'block';
         }
     }
 
@@ -577,7 +593,7 @@
             wrongCount++;
             playWrong();
         }
-        document.getElementById('q5').style.display = 'none';
+        document.getElementById('q6').style.display = 'none';
         showResult();
     }
 
@@ -586,11 +602,10 @@
         document.getElementById('scoreText').innerText = `Doğru: ${correctCount} | Yanlış: ${wrongCount}`;
         
         // Konfeti patlatma
-        if (correctCount >= 3 && typeof confetti === 'function') {
+        if (correctCount >= 4 && typeof confetti === 'function') {
             confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
         }
         
-        // Bomb has been defused ses efekti simülasyonu
         playSound(400, 'sine', 0.2);
         setTimeout(() => playSound(600, 'sine', 0.4), 200);
 
@@ -619,7 +634,7 @@
         scores.forEach((item, index) => {
             const li = document.createElement('li');
             li.className = 'leaderboard-item';
-            li.innerHTML = `<span><b>${index + 1}.</b> ${item.name}</span> <span style="color:var(--accent-color); font-weight:bold;">${item.score}/5 Doğru</span>`;
+            li.innerHTML = `<span><b>${index + 1}.</b> ${item.name}</span> <span style="color:var(--accent-color); font-weight:bold;">${item.score}/6 Doğru</span>`;
             list.appendChild(li);
         });
     }
